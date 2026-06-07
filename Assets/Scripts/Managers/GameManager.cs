@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] private int _startingLives = 3;
+    [SerializeField] private int       _startingLives = 3;
+    [SerializeField] private Transform _spawnPoint;
 
     public int Score { get; private set; }
     public int Lives { get; private set; }
@@ -51,7 +52,10 @@ public class GameManager : MonoBehaviour
     {
         var player = FindFirstObjectByType<PlayerController>();
         if (player == null) return;
-        player.transform.position = Vector3.zero;
+        Vector3 pos = _spawnPoint != null ? _spawnPoint.position : Vector3.zero;
+        player.transform.position = pos;
+        if (player.TryGetComponent<PlayerHealth>(out var health))
+            health.Respawn();
     }
 
     public void RestartGame()
