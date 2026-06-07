@@ -33,19 +33,21 @@ public class GameManager : MonoBehaviour
         OnScoreChanged?.Invoke(Score);
     }
 
-    public void PlayerDied()
+    public void LoseLife()
     {
+        if (_gameOver) return;
         Lives--;
         OnLivesChanged?.Invoke(Lives);
-        if (Lives <= 0)
-        {
-            _gameOver = true;
-            OnGameOver?.Invoke();
-        }
-        else
-        {
-            Invoke(nameof(RespawnPlayer), 2f);
-        }
+        if (Lives <= 0) { _gameOver = true; OnGameOver?.Invoke(); }
+    }
+
+    public void PlayerDied()
+    {
+        if (_gameOver) return;
+        Lives--;
+        OnLivesChanged?.Invoke(Lives);
+        if (Lives <= 0) { _gameOver = true; OnGameOver?.Invoke(); }
+        else { Invoke(nameof(RespawnPlayer), 2f); }
     }
 
     private void RespawnPlayer()
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        CancelInvoke();
         _gameOver = false;
         Score = 0;
         Lives = _startingLives;

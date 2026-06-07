@@ -30,7 +30,16 @@ public class UIManager : MonoBehaviour
         _gameOverPanel?.SetActive(false);
     }
 
-    private void RefreshScore(int score) => _scoreText.text = $"PUNTS: {score:D6}";
+    private void OnDestroy()
+    {
+        var gm = GameManager.Instance;
+        if (gm == null) return;
+        gm.OnScoreChanged -= RefreshScore;
+        gm.OnLivesChanged -= RefreshLives;
+        gm.OnGameOver     -= ShowGameOver;
+    }
+
+    private void RefreshScore(int score) => _scoreText.text = $"PUNTS: {score:D3}";
     private void RefreshLives(int lives)  => _livesText.text = $"VIDES: {new string('♥', lives)}";
     private void ShowGameOver()           => _gameOverPanel?.SetActive(true);
 

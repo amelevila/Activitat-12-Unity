@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         bool grounded = _ground.IsGrounded;
+        if (grounded) _powerUp?.ResetDoubleJump();
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -39,7 +40,6 @@ public class PlayerController : MonoBehaviour
             {
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
                 _anim.SetTrigger(_hashJump);
-                _powerUp?.ResetDoubleJump();
             }
             else if (_powerUp != null && _powerUp.UseDoubleJump())
             {

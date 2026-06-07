@@ -29,8 +29,11 @@ public class PlayerHealth : MonoBehaviour
         Vector2 dir = ((Vector2)transform.position - hitSourcePos).normalized;
         _rb.linearVelocity = new Vector2(dir.x * _knockbackX, _knockbackY);
         AudioManager.Instance?.PlayHurt();
-        StartCoroutine(InvincibilityRoutine());
-        GameManager.Instance?.PlayerDied();
+        GameManager.Instance?.LoseLife();
+        if (GameManager.Instance != null && GameManager.Instance.Lives <= 0)
+            Die();
+        else
+            StartCoroutine(InvincibilityRoutine());
     }
 
     public void ForceKill()
