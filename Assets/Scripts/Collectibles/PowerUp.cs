@@ -21,7 +21,7 @@ public class PowerUp : MonoBehaviour
         else
             powerUp.ActivateDoubleJump(_duration);
 
-        AudioManager.Instance?.PlayCoin();
+        AudioManager.Instance?.PlayPowerUp();
         Destroy(gameObject);
     }
 }

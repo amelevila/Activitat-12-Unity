@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private Animator       _anim;
     private SpriteRenderer _sr;
     private PlayerPowerUp  _powerUp;
+    private bool           _wasGrounded;
 
     private static readonly int _hashSpeed      = Animator.StringToHash("Speed");
     private static readonly int _hashIsGrounded = Animator.StringToHash("IsGrounded");
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
     {
         bool grounded = _ground.IsGrounded;
         if (grounded) _powerUp?.ResetDoubleJump();
+        if (grounded && !_wasGrounded) AudioManager.Instance?.PlayLand();
+        _wasGrounded = grounded;
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -40,11 +43,13 @@ public class PlayerController : MonoBehaviour
             {
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
                 _anim.SetTrigger(_hashJump);
+                AudioManager.Instance?.PlayJump();
             }
             else if (_powerUp != null && _powerUp.UseDoubleJump())
             {
                 _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
                 _anim.SetTrigger(_hashJump);
+                AudioManager.Instance?.PlayJump();
             }
         }
 

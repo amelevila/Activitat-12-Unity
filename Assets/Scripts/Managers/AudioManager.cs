@@ -14,9 +14,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _landClip;
     [SerializeField] private AudioClip _hurtClip;
     [SerializeField] private AudioClip _deathClip;
-    [SerializeField] private AudioClip _enemyDeathClip;
-    [SerializeField] private AudioClip _enemyAlertClip;
-    [SerializeField] private AudioClip _trapClip;
 
     private void Awake()
     {
@@ -46,7 +43,4 @@ public class AudioManager : MonoBehaviour
     public void PlayLand()        => PlaySFX(_landClip);
     public void PlayHurt()        => PlaySFX(_hurtClip);
     public void PlayDeath()       => PlaySFX(_deathClip);
-    public void PlayEnemyDeath()  => PlaySFX(_enemyDeathClip);
-    public void PlayEnemyAlert()  => PlaySFX(_enemyAlertClip);
-    public void PlayTrap()        => PlaySFX(_trapClip);
 }
